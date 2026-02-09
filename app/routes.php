@@ -3,6 +3,7 @@ require_once __DIR__ . '/controllers/AuthController.php';
 require_once __DIR__ . '/controllers/ObjetController.php';
 require_once __DIR__ . '/controllers/StatistiqueController.php';
 require_once __DIR__ . '/controllers/RechercheController.php';
+require_once __DIR__ . '/controllers/HistoryController.php';
 require_once __DIR__ . '/services/Validator.php';
 require_once __DIR__ . '/services/UserService.php';
 require_once __DIR__ . '/repositories/UserRepository.php';
