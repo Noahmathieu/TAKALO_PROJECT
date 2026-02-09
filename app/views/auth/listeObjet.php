@@ -11,7 +11,7 @@
         <?php foreach ($objets as $objet){ ?>
             <li><?= $objet['nom_objet'] ?> </li>
             <li><?= $objet['description_objet'] ?> </li>
-            <button><a href="/ch"></a></button>
+            <button><a href="/objets/echanger/<?= $objet['id_objet'] ?>">echanger</a></button>
         <?php } ?>
     </ul>
 </body>
