@@ -108,3 +108,10 @@ function delete_photo($id_photo) {
     $stmt = $pdo->prepare($sql);
     return $stmt->execute([$id_photo]);
 }
+  function getAllOther($id_user) {
+    $pdo = get_pdo();
+    $sql = "SELECT * FROM objet WHERE id_user != ?";
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute([$id_user]);
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
