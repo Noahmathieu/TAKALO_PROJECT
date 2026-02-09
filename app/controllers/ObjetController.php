@@ -48,7 +48,39 @@ class ObjetController {
         }
 
         $objets = getAllOther((int) $_SESSION['user_id']);
-        Flight::render('auth/listeObjet', ['objets' => $objets]);
+        $mesObjets = get_objets_by_user((int) $_SESSION['user_id']);
+        Flight::render('auth/listeObjet', [
+            'objets' => $objets,
+            'mesObjets' => $mesObjets
+        ]);
+    }
+
+    // ========================================
+    // ÉCHANGES
+    // ========================================
+
+    public static function demander_echange($id_objet_demande, $id_objet_offert, $id_demandeur) {
+        $objet = get_objet_by_id($id_objet_demande);
+        if (!$objet) return false;
+        
+        // Vérifier qu'une demande identique n'existe pas déjà
+        if (demande_existe($id_objet_demande, $id_objet_offert, $id_demandeur)) {
+            return false;
+        }
+        
+        return create_demande_echange($id_objet_demande, $id_objet_offert, $id_demandeur, $objet['id_user']);
+    }
+
+    public static function accepter_demande($id_demande) {
+        return update_statut_demande($id_demande, 'accepte');
+    }
+
+    public static function refuser_demande($id_demande) {
+        return update_statut_demande($id_demande, 'refuse');
+    }
+
+    public static function get_demande($id_demande) {
+        return get_demande_by_id($id_demande);
     }
 
     // ========================================

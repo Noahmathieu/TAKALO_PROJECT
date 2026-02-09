@@ -209,4 +209,38 @@ Flight::route('GET /statistique', ['StatistiqueController', 'showStatistique']);
 // Recherche
 Flight::route('GET /recherche', ['RechercheController', 'showRecherche']);
 Flight::route('POST /recherche', ['RechercheController', 'showRecherche']);
+<<<<<<< HEAD
 Flight::route('GET /history/@id', ['HistoryController', 'showHistory']);
+=======
+
+Flight::route('POST /objets/echanger/@id', function($id){
+    if (session_status() === PHP_SESSION_NONE) session_start();
+    if (empty($_SESSION['user_id'])) {
+        Flight::redirect('/login');
+        return;
+    }
+    
+    $id_objet_demande = intval($id);
+    $id_objet_offert = intval($_POST['id_objet_offert'] ?? 0);
+    $id_demandeur = $_SESSION['user_id'];
+    
+    // Vérifier que l'objet demandé existe et n'appartient pas au demandeur
+    $objet_demande = ObjetController::voir($id_objet_demande);
+    if (!$objet_demande || $objet_demande['id_user'] == $id_demandeur) {
+        Flight::redirect('/objets');
+        return;
+    }
+    
+    // Vérifier que l'objet offert appartient bien au demandeur
+    $objet_offert = ObjetController::voir($id_objet_offert);
+    if (!$objet_offert || $objet_offert['id_user'] != $id_demandeur) {
+        Flight::redirect('/objets');
+        return;
+    }
+    
+    // Créer la demande d'échange
+    ObjetController::demander_echange($id_objet_demande, $id_objet_offert, $id_demandeur);
+    
+    Flight::redirect('/objets');
+});
+>>>>>>> 7e4b49e0e9f39bd3aa552036f4ea112d36716416
