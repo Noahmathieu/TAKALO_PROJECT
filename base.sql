@@ -40,6 +40,20 @@ CREATE TABLE objet_photos (
     photo_path VARCHAR(255) NOT NULL,
     FOREIGN KEY (objet_id) REFERENCES objet(id_objet)
 );
+CREATE TABLE demande_echange (
+    id_demande INT PRIMARY KEY AUTO_INCREMENT,
+    id_objet_demande INT NOT NULL COMMENT 'Objet que le demandeur veut obtenir',
+    id_objet_offert INT NOT NULL COMMENT 'Objet que le demandeur propose en échange',
+    id_demandeur INT NOT NULL COMMENT 'Utilisateur qui fait la demande',
+    id_proprietaire INT NOT NULL COMMENT 'Propriétaire de l objet demandé',
+    statut ENUM('en_attente', 'accepte', 'refuse') DEFAULT 'en_attente',
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (id_objet_demande) REFERENCES objet(id_objet),
+    FOREIGN KEY (id_objet_offert) REFERENCES objet(id_objet),
+    FOREIGN KEY (id_demandeur) REFERENCES users(id),
+    FOREIGN KEY (id_proprietaire) REFERENCES users(id)
+);
+
 insert into users (username, email, password) values
 ('mitia', 'mitia@gmail.com', 'mitia123'),
 ('tommy', 'tommy@gmail.com', 'tommy123');

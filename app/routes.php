@@ -216,7 +216,27 @@ Flight::route('POST /objets/echanger/@id', function($id){
         Flight::redirect('/login');
         return;
     }
-    //demande
-   
+    
+    $id_objet_demande = intval($id);
+    $id_objet_offert = intval($_POST['id_objet_offert'] ?? 0);
+    $id_demandeur = $_SESSION['user_id'];
+    
+    // Vérifier que l'objet demandé existe et n'appartient pas au demandeur
+    $objet_demande = ObjetController::voir($id_objet_demande);
+    if (!$objet_demande || $objet_demande['id_user'] == $id_demandeur) {
+        Flight::redirect('/objets');
+        return;
+    }
+    
+    // Vérifier que l'objet offert appartient bien au demandeur
+    $objet_offert = ObjetController::voir($id_objet_offert);
+    if (!$objet_offert || $objet_offert['id_user'] != $id_demandeur) {
+        Flight::redirect('/objets');
+        return;
+    }
+    
+    // Créer la demande d'échange
+    ObjetController::demander_echange($id_objet_demande, $id_objet_offert, $id_demandeur);
+    
     Flight::redirect('/objets');
 });

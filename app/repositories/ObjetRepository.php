@@ -115,8 +115,84 @@ function delete_photo($id_photo) {
 
 function getAllOther($id_user) {
     $pdo = get_pdo();
-    $sql = "SELECT * FROM objet WHERE id_user != ?";
+    $sql = "SELECT o.*, c.nom_categorie, u.username 
+            FROM objet o 
+            LEFT JOIN categorie c ON o.id_categorie = c.id_categorie
+            LEFT JOIN users u ON o.id_user = u.id
+            WHERE o.id_user != ?
+            ORDER BY o.created_at DESC";
     $stmt = $pdo->prepare($sql);
     $stmt->execute([$id_user]);
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
+
+// ========================================
+// DEMANDES D'ÉCHANGE
+// ========================================
+
+function create_demande_echange($id_objet_demande, $id_objet_offert, $id_demandeur, $id_proprietaire) {
+    $pdo = get_pdo();
+    $sql = "INSERT INTO demande_echange (id_objet_demande, id_objet_offert, id_demandeur, id_proprietaire) 
+            VALUES (?, ?, ?, ?)";
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute([$id_objet_demande, $id_objet_offert, $id_demandeur, $id_proprietaire]);
+    return $pdo->lastInsertId();
+}
+
+function get_demandes_recues($id_proprietaire) {
+    $pdo = get_pdo();
+    $sql = "SELECT de.*, 
+                   od.nom_objet AS nom_objet_demande, 
+                   oo.nom_objet AS nom_objet_offert,
+                   u.username AS demandeur_nom
+            FROM demande_echange de
+            JOIN objet od ON de.id_objet_demande = od.id_objet
+            JOIN objet oo ON de.id_objet_offert = oo.id_objet
+            JOIN users u ON de.id_demandeur = u.id
+            WHERE de.id_proprietaire = ?
+            ORDER BY de.created_at DESC";
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute([$id_proprietaire]);
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
+
+function get_demandes_envoyees($id_demandeur) {
+    $pdo = get_pdo();
+    $sql = "SELECT de.*, 
+                   od.nom_objet AS nom_objet_demande, 
+                   oo.nom_objet AS nom_objet_offert,
+                   u.username AS proprietaire_nom
+            FROM demande_echange de
+            JOIN objet od ON de.id_objet_demande = od.id_objet
+            JOIN objet oo ON de.id_objet_offert = oo.id_objet
+            JOIN users u ON de.id_proprietaire = u.id
+            WHERE de.id_demandeur = ?
+            ORDER BY de.created_at DESC";
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute([$id_demandeur]);
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
+
+function update_statut_demande($id_demande, $statut) {
+    $pdo = get_pdo();
+    $sql = "UPDATE demande_echange SET statut = ? WHERE id_demande = ?";
+    $stmt = $pdo->prepare($sql);
+    return $stmt->execute([$statut, $id_demande]);
+}
+
+function get_demande_by_id($id_demande) {
+    $pdo = get_pdo();
+    $sql = "SELECT * FROM demande_echange WHERE id_demande = ?";
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute([$id_demande]);
+    return $stmt->fetch(PDO::FETCH_ASSOC);
+}
+
+function demande_existe($id_objet_demande, $id_objet_offert, $id_demandeur) {
+    $pdo = get_pdo();
+    $sql = "SELECT COUNT(*) FROM demande_echange 
+            WHERE id_objet_demande = ? AND id_objet_offert = ? AND id_demandeur = ? AND statut = 'en_attente'";
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute([$id_objet_demande, $id_objet_offert, $id_demandeur]);
+    return $stmt->fetchColumn() > 0;
 }
