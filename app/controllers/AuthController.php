@@ -1,4 +1,5 @@
 <?php
+session_start();
 class AuthController {
 
   public static function showRegister() {
@@ -63,14 +64,10 @@ class AuthController {
     if ($res['ok']) {
       $svc->register($res['values'], (string)$input['password']);
       
-      // Démarrer la session pour l'utilisateur inscrit
-      if (session_status() === PHP_SESSION_NONE) session_start();
       $user = $repo->findByEmail($res['values']['email']);
       $_SESSION['user_id'] = $user['id'];
       $_SESSION['user_email'] = $user['email'];
-      $_SESSION['user_username'] = $user['username'];
-      
-      // Rediriger vers la page de gestion des objets
+      $_SESSION['user_username'] = $user['username'];      
       header('Location: /mes-objets');
       exit;
     }
@@ -117,7 +114,6 @@ class AuthController {
       'password' => (string)$req->data->password,
     ];
 
-    // Validation des champs
     $res = Validator::validateLogin($input);
 
     if (!$res['ok']) {
@@ -130,7 +126,6 @@ class AuthController {
       return;
     }
 
-    // Vérification de l'utilisateur en base de données
     $user = $repo->findByEmail($input['email']);
 
     if (!$user || !password_verify($input['password'], $user['password'])) {
@@ -142,16 +137,9 @@ class AuthController {
       ]);
       return;
     }
-
-    // Connexion réussie - démarrer la session
-    if (session_status() === PHP_SESSION_NONE) {
-      session_start();
-    }
     $_SESSION['user_id'] = $user['id'];
     $_SESSION['user_email'] = $user['email'];
     $_SESSION['user_username'] = $user['username'] ?? '';
-
-    // Rediriger vers la page de gestion des objets
     header('Location: /mes-objets');
     exit;
   }
