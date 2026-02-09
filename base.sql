@@ -34,4 +34,11 @@ CREATE TABLE objet_photos (
     FOREIGN KEY (objet_id) REFERENCES objet(id_objet)
 );
 
+insert into users (username, email, password) values
+('mitia', 'mitia@gmail.com', 'mitia123'),
+('tommy', 'tommy@gmail.com', 'tommy123');
 
+insert into objet (nom_objet, description_objet, id_categorie, id_user) values
+('Vélo', 'Un vélo de montagne en bon état', 1, 1),
+('Table', 'Une table en bois massif', 2, 2),
+('Chaise', 'Une chaise confortable pour le bureau', 2, 3);
