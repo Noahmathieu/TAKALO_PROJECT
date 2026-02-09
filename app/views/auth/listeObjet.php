@@ -16,18 +16,7 @@ $mesObjets = $mesObjets ?? [];
     .photo-small { width: 80px; height: 80px; object-fit: cover; border-radius: 5px; margin: 2px; }
   </style>
 </head>
-<<<<<<< HEAD
-<body>
-    <h1>Liste des Objets</h1>
-    <ul>
-        <?php foreach ($objets as $objet){ ?>
-            <li><?= $objet['nom_objet'] ?> </li>
-            <li><?= $objet['description_objet'] ?> </li>
-            <button><a href="/objets/echanger/<?= $objet['id_objet'] ?>">echanger</a></button>
-            <button><a href="/history/<?= $objet['id_objet'] ?>">historique</a></button>
-        <?php } ?>
-    </ul>
-=======
+
 <body class="bg-light">
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
   <div class="container">
@@ -98,6 +87,9 @@ $mesObjets = $mesObjets ?? [];
                       <i class="bi bi-info-circle"></i> Aucun objet à proposer
                     </span>
                   <?php } ?>
+                  <a href="/history/<?= $objet['id_objet'] ?>" class="btn btn-sm btn-outline-secondary ms-1">
+                    <i class="bi bi-clock-history"></i> Historique
+                  </a>
                 </td>
               </tr>
             <?php } ?>
