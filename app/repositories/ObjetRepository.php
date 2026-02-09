@@ -1,8 +1,4 @@
 <?php
-
-// ========================================
-// Fonction helper pour obtenir la connexion PDO
-// ========================================
 function get_pdo() {
     return Flight::db();
 }
@@ -108,9 +104,7 @@ function get_photos_by_objet($id_objet) {
 
 function delete_photo($id_photo) {
     $pdo = get_pdo();
-    
     $sql = "DELETE FROM objet_photos WHERE id = ?";
     $stmt = $pdo->prepare($sql);
-    
     return $stmt->execute([$id_photo]);
 }

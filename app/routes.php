@@ -192,9 +192,6 @@ Flight::route('POST /objets/delete-photo', function(){
     Flight::json(['success' => true]);
 });
 
-// ========================================
-// ROUTES API CATÉGORIES
-// ========================================
 
 Flight::route('GET /api/categories', function(){
     $categories = ObjetController::get_categories();
