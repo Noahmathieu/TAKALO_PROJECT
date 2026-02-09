@@ -9,5 +9,10 @@ function create_objet($url , $name , $description , $category , $user_id){
 }
 
 function insert_photo() {
-    
+
+}
+function get_categories() {
+    global $pdo;
+    $sql = $pdo->query("SELECT * FROM categories");
+    return $sql->fetchAll(PDO::FETCH_ASSOC);
 }

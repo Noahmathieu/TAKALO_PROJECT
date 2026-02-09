@@ -16,6 +16,13 @@ CREATE TABLE categorie (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
+INSERT INTO categorie (nom_categorie, description_categorie) VALUES
+('Électronique', 'Appareils électroniques tels que téléphones, ordinateurs, tablettes, etc.'),
+('Vêtements', 'Vêtements pour hommes, femmes et enfants.'),
+('Livres', 'Livres de différents genres et catégories.'),
+('Meubles', 'Meubles pour la maison et le bureau.'),
+('Jouets', 'Jouets pour enfants de tous âges.');
+
 CREATE TABLE objet (
     id_objet INT PRIMARY KEY AUTO_INCREMENT,
     nom_objet VARCHAR(255) NOT NULL,

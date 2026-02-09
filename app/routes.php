@@ -35,3 +35,5 @@ Flight::route('GET /logout', function(){
   session_destroy();
   Flight::redirect('/login');
 });
+
+// Routes pour les categories
