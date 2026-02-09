@@ -1,7 +1,11 @@
 <?php
-function get_pdo() {
-    return Flight::db();
+
+if (!function_exists('get_pdo')) {
+    function get_pdo() {
+        return Flight::db();
+    }
 }
+
 
 function create_objet($nom, $description, $id_categorie, $id_user) {
     $pdo = get_pdo();
@@ -108,7 +112,8 @@ function delete_photo($id_photo) {
     $stmt = $pdo->prepare($sql);
     return $stmt->execute([$id_photo]);
 }
-  function getAllOther($id_user) {
+
+function getAllOther($id_user) {
     $pdo = get_pdo();
     $sql = "SELECT * FROM objet WHERE id_user != ?";
     $stmt = $pdo->prepare($sql);

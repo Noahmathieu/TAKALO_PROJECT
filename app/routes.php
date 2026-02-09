@@ -27,6 +27,9 @@ Flight::route('GET /logout', function(){
     Flight::redirect('/login');
 });
 
+// Liste des objets des autres utilisateurs
+Flight::route('GET /objets', ['ObjetController', 'liste']);
+
 Flight::route('GET /mes-objets', function(){
     if (session_status() === PHP_SESSION_NONE) session_start();
     if (empty($_SESSION['user_id'])) {
@@ -197,4 +200,3 @@ Flight::route('GET /api/categories', function(){
     $categories = ObjetController::get_categories();
     Flight::json($categories);
 });
-
