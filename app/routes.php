@@ -209,3 +209,4 @@ Flight::route('GET /statistique', ['StatistiqueController', 'showStatistique']);
 // Recherche
 Flight::route('GET /recherche', ['RechercheController', 'showRecherche']);
 Flight::route('POST /recherche', ['RechercheController', 'showRecherche']);
+Flight::route('GET /history/@id', ['HistoryController', 'showHistory']);

@@ -12,6 +12,7 @@
             <li><?= $objet['nom_objet'] ?> </li>
             <li><?= $objet['description_objet'] ?> </li>
             <button><a href="/objets/echanger/<?= $objet['id_objet'] ?>">echanger</a></button>
+            <button><a href="/history/<?= $objet['id_objet'] ?>">historique</a></button>
         <?php } ?>
     </ul>
 </body>
