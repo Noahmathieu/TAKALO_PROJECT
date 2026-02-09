@@ -8,7 +8,6 @@ document.addEventListener("DOMContentLoaded", () => {
     username: { input: "#username", err: "#usernameError" },
     email: { input: "#email", err: "#emailError" },
     password: { input: "#password", err: "#passwordError" },
-    confirm_password: { input: "#confirm_password", err: "#confirm_passwordError" },
   };
 
   function setStatus(type, msg) {
@@ -66,7 +65,10 @@ document.addEventListener("DOMContentLoaded", () => {
     return res.json();
   }
 
+  let isSubmitting = false;
+
   form.addEventListener("submit", async (e) => {
+    if (isSubmitting) return; // Permet la soumission native après validation
     e.preventDefault();
     clearFeedback();
 
@@ -76,6 +78,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
       if (data.ok) {
         setStatus("success", "Validation OK ✅ Envoi en cours...");
+        isSubmitting = true;
         form.submit();
       } else {
         setStatus("danger", "Veuillez corriger les erreurs.");

@@ -13,3 +13,25 @@ Flight::route('POST /api/validate/register', ['AuthController', 'validateRegiste
 Flight::route('GET /login', ['AuthController', 'showLogin']);
 Flight::route('POST /login', ['AuthController', 'postLogin']);
 Flight::route('POST /api/validate/login', ['AuthController', 'validateLoginAjax']);
+
+// Page après création
+Flight::route('GET /nouveau', function(){
+	Flight::render('auth/nouveau');
+});
+
+// Page de gestion des objets
+Flight::route('GET /mes-objets', function(){
+  if (session_status() === PHP_SESSION_NONE) session_start();
+  if (empty($_SESSION['user_id'])) {
+    Flight::redirect('/login');
+    return;
+  }
+  Flight::render('objets/mes-objets');
+});
+
+// Déconnexion
+Flight::route('GET /logout', function(){
+  if (session_status() === PHP_SESSION_NONE) session_start();
+  session_destroy();
+  Flight::redirect('/login');
+});

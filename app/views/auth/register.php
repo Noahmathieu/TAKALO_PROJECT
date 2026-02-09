@@ -41,13 +41,6 @@ function cls_invalid($errors, $field){ return ($errors[$field] ?? '') !== '' ? '
               <input id="password" name="password" type="password" class="form-control <?= cls_invalid($errors,'password') ?>" placeholder="Minimum 8 caractères">
               <div class="invalid-feedback" id="passwordError"><?= e($errors['password'] ?? '') ?></div>
             </div>
-
-            <div class="mb-3">
-              <label for="confirm_password" class="form-label">Confirmer le mot de passe</label>
-              <input id="confirm_password" name="confirm_password" type="password" class="form-control <?= cls_invalid($errors,'confirm_password') ?>" placeholder="Confirmez votre mot de passe">
-              <div class="invalid-feedback" id="confirm_passwordError"><?= e($errors['confirm_password'] ?? '') ?></div>
-            </div>
-
             <button class="btn btn-primary w-100" type="submit">S'inscrire</button>
           </form>
 
