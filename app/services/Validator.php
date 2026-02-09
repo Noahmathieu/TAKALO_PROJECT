@@ -8,7 +8,7 @@ class Validator {
   public static function validateRegister(array $input, UserRepository $repo = null) {
     $errors = [
       'username' => '', 'email' => '',
-      'password' => '', 'confirm_password' => ''
+      'password' => ''
     ];
 
     $values = [
@@ -17,7 +17,6 @@ class Validator {
     ];
 
     $password = (string)($input['password'] ?? '');
-    $confirm  = (string)($input['confirm_password'] ?? '');
 
     // Validation du nom d'utilisateur
     if (mb_strlen($values['username']) < 3) {
@@ -36,13 +35,6 @@ class Validator {
     // Validation du mot de passe
     if (strlen($password) < 8) {
       $errors['password'] = "Le mot de passe doit contenir au moins 8 caractères.";
-    }
-
-    // Validation de la confirmation
-    if (strlen($confirm) < 1) {
-      $errors['confirm_password'] = "Veuillez confirmer le mot de passe.";
-    } elseif ($password !== $confirm) {
-      $errors['confirm_password'] = "Les mots de passe ne correspondent pas.";
     }
 
     // Vérification unicité username

@@ -4,7 +4,7 @@ class AuthController {
   public static function showRegister() {
     Flight::render('auth/register', [
       'values' => ['username'=>'', 'email'=>''],
-      'errors' => ['username'=>'', 'email'=>'', 'password'=>'', 'confirm_password'=>''],
+      'errors' => ['username'=>'', 'email'=>'', 'password'=>''],
       'success' => false
     ]);
   }
@@ -30,7 +30,6 @@ class AuthController {
         'username' => trim((string)$req->data->username),
         'email' => trim((string)$req->data->email),
         'password' => (string)$req->data->password,
-        'confirm_password' => (string)$req->data->confirm_password,
       ];
 
       $res = Validator::validateRegister($input, $repo);
@@ -57,19 +56,23 @@ class AuthController {
       'username' => $req->data->username,
       'email' => $req->data->email,
       'password' => $req->data->password,
-      'confirm_password' => $req->data->confirm_password,
     ];
 
     $res = Validator::validateRegister($input, $repo);
 
     if ($res['ok']) {
       $svc->register($res['values'], (string)$input['password']);
-      Flight::render('auth/register', [
-        'values' => ['username'=>'', 'email'=>''],
-        'errors' => ['username'=>'', 'email'=>'', 'password'=>'', 'confirm_password'=>''],
-        'success' => true
-      ]);
-      return;
+      
+      // Démarrer la session pour l'utilisateur inscrit
+      if (session_status() === PHP_SESSION_NONE) session_start();
+      $user = $repo->findByEmail($res['values']['email']);
+      $_SESSION['user_id'] = $user['id'];
+      $_SESSION['user_email'] = $user['email'];
+      $_SESSION['user_username'] = $user['username'];
+      
+      // Rediriger vers la page de gestion des objets
+      header('Location: /mes-objets');
+      exit;
     }
 
     Flight::render('auth/register', [
@@ -148,12 +151,8 @@ class AuthController {
     $_SESSION['user_email'] = $user['email'];
     $_SESSION['user_username'] = $user['username'] ?? '';
 
-    // Redirection ou affichage du succès
-    Flight::render('auth/login', [
-      'values' => ['email' => ''],
-      'errors' => ['email' => '', 'password' => ''],
-      'success' => true,
-      'error_global' => ''
-    ]);
+    // Rediriger vers la page de gestion des objets
+    header('Location: /mes-objets');
+    exit;
   }
 }
