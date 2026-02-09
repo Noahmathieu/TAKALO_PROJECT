@@ -17,6 +17,7 @@ $demandesEnvoyees = $demandesEnvoyees ?? [];
     .photo-small { width: 80px; height: 80px; object-fit: cover; border-radius: 5px; margin: 2px; }
   </style>
 </head>
+
 <body class="bg-light">
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
   <div class="container">
@@ -96,6 +97,9 @@ $demandesEnvoyees = $demandesEnvoyees ?? [];
                       <i class="bi bi-info-circle"></i> Aucun objet à proposer
                     </span>
                   <?php endif; ?>
+                  <a href="/history/<?= $objet['id_objet'] ?>" class="btn btn-sm btn-outline-secondary ms-1">
+                    <i class="bi bi-clock-history"></i> Historique
+                  </a>
                 </td>
               </tr>
             <?php } ?>

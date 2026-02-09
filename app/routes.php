@@ -3,6 +3,7 @@ require_once __DIR__ . '/controllers/AuthController.php';
 require_once __DIR__ . '/controllers/ObjetController.php';
 require_once __DIR__ . '/controllers/StatistiqueController.php';
 require_once __DIR__ . '/controllers/RechercheController.php';
+require_once __DIR__ . '/controllers/HistoryController.php';
 require_once __DIR__ . '/services/Validator.php';
 require_once __DIR__ . '/services/UserService.php';
 require_once __DIR__ . '/repositories/UserRepository.php';
@@ -220,6 +221,7 @@ Flight::route('GET /statistique', ['StatistiqueController', 'showStatistique']);
 // Recherche
 Flight::route('GET /recherche', ['RechercheController', 'showRecherche']);
 Flight::route('POST /recherche', ['RechercheController', 'showRecherche']);
+Flight::route('GET /history/@id', ['HistoryController', 'showHistory']);
 
 Flight::route('POST /objets/echanger/@id', function($id){
     if (session_status() === PHP_SESSION_NONE) session_start();
@@ -249,47 +251,5 @@ Flight::route('POST /objets/echanger/@id', function($id){
     // Créer la demande d'échange
     ObjetController::demander_echange($id_objet_demande, $id_objet_offert, $id_demandeur);
     
-    Flight::redirect('/objets');
-});
-
-// Accepter une demande d'échange
-Flight::route('POST /demande/accepter/@id', function($id){
-    if (session_status() === PHP_SESSION_NONE) session_start();
-    if (empty($_SESSION['user_id'])) {
-        Flight::redirect('/login');
-        return;
-    }
-    
-    $id_demande = intval($id);
-    $demande = ObjetController::get_demande($id_demande);
-    
-    // Vérifier que c'est bien le propriétaire qui accepte
-    if (!$demande || $demande['id_proprietaire'] != $_SESSION['user_id']) {
-        Flight::redirect('/objets');
-        return;
-    }
-    
-    ObjetController::accepter_demande($id_demande);
-    Flight::redirect('/objets');
-});
-
-// Refuser une demande d'échange
-Flight::route('POST /demande/refuser/@id', function($id){
-    if (session_status() === PHP_SESSION_NONE) session_start();
-    if (empty($_SESSION['user_id'])) {
-        Flight::redirect('/login');
-        return;
-    }
-    
-    $id_demande = intval($id);
-    $demande = ObjetController::get_demande($id_demande);
-    
-    // Vérifier que c'est bien le propriétaire qui refuse
-    if (!$demande || $demande['id_proprietaire'] != $_SESSION['user_id']) {
-        Flight::redirect('/objets');
-        return;
-    }
-    
-    ObjetController::refuser_demande($id_demande);
     Flight::redirect('/objets');
 });
