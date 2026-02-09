@@ -209,9 +209,7 @@ Flight::route('GET /statistique', ['StatistiqueController', 'showStatistique']);
 // Recherche
 Flight::route('GET /recherche', ['RechercheController', 'showRecherche']);
 Flight::route('POST /recherche', ['RechercheController', 'showRecherche']);
-<<<<<<< HEAD
 Flight::route('GET /history/@id', ['HistoryController', 'showHistory']);
-=======
 
 Flight::route('POST /objets/echanger/@id', function($id){
     if (session_status() === PHP_SESSION_NONE) session_start();
@@ -243,4 +241,3 @@ Flight::route('POST /objets/echanger/@id', function($id){
     
     Flight::redirect('/objets');
 });
->>>>>>> 7e4b49e0e9f39bd3aa552036f4ea112d36716416
