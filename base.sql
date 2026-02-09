@@ -34,3 +34,4 @@ CREATE TABLE objet_photos (
     FOREIGN KEY (objet_id) REFERENCES objet(id_objet)
 );
 
+

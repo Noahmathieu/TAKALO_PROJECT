@@ -1,0 +1,11 @@
+- Base de donne : 
+    - Table : 
+        - USer
+        - Message 
+- Login : 
+    - Auto-login : 
+        - Fonction de verification (js + php)
+            - Deja fait (ok)
+        - Page de login
+            - input
+            - integration du code php 
