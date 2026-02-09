@@ -47,11 +47,22 @@ class ObjetController {
             return;
         }
 
-        $objets = getAllOther((int) $_SESSION['user_id']);
-        $mesObjets = get_objets_by_user((int) $_SESSION['user_id']);
+        $userId = (int) $_SESSION['user_id'];
+        $objets = getAllOther($userId);
+        $mesObjets = get_objets_by_user($userId);
+        
+        $demandesEnvoyees = [];
+        foreach ($objets as $objet) {
+            $demande = get_demande_envoyee_pour_objet($objet['id_objet'], $userId);
+            if ($demande) {
+                $demandesEnvoyees[$objet['id_objet']] = $demande;
+            }
+        }
+        
         Flight::render('auth/listeObjet', [
             'objets' => $objets,
-            'mesObjets' => $mesObjets
+            'mesObjets' => $mesObjets,
+            'demandesEnvoyees' => $demandesEnvoyees
         ]);
     }
 
@@ -63,7 +74,6 @@ class ObjetController {
         $objet = get_objet_by_id($id_objet_demande);
         if (!$objet) return false;
         
-        // Vérifier qu'une demande identique n'existe pas déjà
         if (demande_existe($id_objet_demande, $id_objet_offert, $id_demandeur)) {
             return false;
         }
@@ -72,7 +82,29 @@ class ObjetController {
     }
 
     public static function accepter_demande($id_demande) {
-        return update_statut_demande($id_demande, 'accepte');
+        $demande = get_demande_by_id($id_demande);
+        if (!$demande) return false;
+        
+        $transfert = transferer_propriete(
+            $demande['id_objet_demande'], 
+            $demande['id_objet_offert'], 
+            $demande['id_demandeur'], 
+            $demande['id_proprietaire']
+        );
+        
+        if ($transfert) {
+            update_statut_demande($id_demande, 'accepte');
+            
+            $pdo = get_pdo();
+            $sql = "UPDATE demande_echange SET statut = 'refuse' 
+                    WHERE id_demande != ? AND statut = 'en_attente' 
+                    AND (id_objet_demande = ? OR id_objet_offert = ? OR id_objet_demande = ? OR id_objet_offert = ?)";
+            $stmt = $pdo->prepare($sql);
+            $stmt->execute([$id_demande, $demande['id_objet_demande'], $demande['id_objet_demande'], $demande['id_objet_offert'], $demande['id_objet_offert']]);
+            
+            return true;
+        }
+        return false;
     }
 
     public static function refuser_demande($id_demande) {

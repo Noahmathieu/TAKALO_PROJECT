@@ -2,6 +2,7 @@
 function e($v){ return htmlspecialchars($v ?? '', ENT_QUOTES, 'UTF-8'); }
 $objets = $objets ?? [];
 $mesObjets = $mesObjets ?? [];
+$demandesEnvoyees = $demandesEnvoyees ?? [];
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -74,18 +75,27 @@ $mesObjets = $mesObjets ?? [];
                 <td><i class="bi bi-person"></i> <?= e($objet['username'] ?? 'Inconnu') ?></td>
                 <td><small class="text-muted"><?= date('d/m/Y', strtotime($objet['created_at'])) ?></small></td>
                 <td>
-                  <?php if (!empty($mesObjets)){ ?>
+                  <?php 
+                  $demandeEnvoyee = $demandesEnvoyees[$objet['id_objet']] ?? null;
+                  if ($demandeEnvoyee): ?>
+                    <!-- Demande déjà envoyée -->
+                    <span class="badge bg-warning text-dark">
+                      <i class="bi bi-hourglass-split"></i> Demande envoyée à <?= e($objet['username'] ?? 'Inconnu') ?>
+                    </span>
+                    <br><small class="text-muted">Objet proposé : <?= e($demandeEnvoyee['nom_objet_offert']) ?></small>
+                  <?php elseif (!empty($mesObjets)): ?>
+                    <!-- Bouton échanger -->
                     <button class="btn btn-sm btn-outline-success btn-echange" 
                             data-id="<?= $objet['id_objet'] ?>"
                             data-nom="<?= e($objet['nom_objet']) ?>"
                             data-proprietaire="<?= e($objet['username'] ?? 'Inconnu') ?>">
                       <i class="bi bi-arrow-left-right"></i> Échanger
                     </button>
-                  <?php } else { ?>
+                  <?php else: ?>
                     <span class="text-muted" title="Ajoutez d'abord un objet dans Mes Objets">
                       <i class="bi bi-info-circle"></i> Aucun objet à proposer
                     </span>
-                  <?php } ?>
+                  <?php endif; ?>
                 </td>
               </tr>
             <?php } ?>
@@ -104,7 +114,7 @@ $mesObjets = $mesObjets ?? [];
         <h5 class="modal-title"><i class="bi bi-arrow-left-right"></i> Demande d'échange</h5>
         <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
       </div>
-      <form id="echanteForm" method="post" action="">
+      <form id="echangeForm" method="post" action="">
         <div class="modal-body">
           <div class="mb-3">
             <p>Vous souhaitez échanger contre l'objet : <strong id="echange_nom_objet"></strong></p>
@@ -144,7 +154,7 @@ document.querySelectorAll('.btn-echange').forEach(btn => {
     
     document.getElementById('echange_nom_objet').textContent = nomObjet;
     document.getElementById('echange_proprietaire').textContent = proprietaire;
-    document.getElementById('echanteForm').action = '/objets/echanger/' + idObjet;
+    document.getElementById('echangeForm').action = '/objets/echanger/' + idObjet;
     document.getElementById('id_objet_offert').value = '';
     
     new bootstrap.Modal(document.getElementById('echanteModal')).show();

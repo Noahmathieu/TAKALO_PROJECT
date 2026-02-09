@@ -196,3 +196,53 @@ function demande_existe($id_objet_demande, $id_objet_offert, $id_demandeur) {
     $stmt->execute([$id_objet_demande, $id_objet_offert, $id_demandeur]);
     return $stmt->fetchColumn() > 0;
 }
+
+// Demandes envoyées par un user pour un objet précis (en_attente)
+function get_demande_envoyee_pour_objet($id_objet_demande, $id_demandeur) {
+    $pdo = get_pdo();
+    $sql = "SELECT de.*, oo.nom_objet AS nom_objet_offert, u.username AS proprietaire_nom
+            FROM demande_echange de
+            JOIN objet oo ON de.id_objet_offert = oo.id_objet
+            JOIN users u ON de.id_proprietaire = u.id
+            WHERE de.id_objet_demande = ? AND de.id_demandeur = ? AND de.statut = 'en_attente'";
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute([$id_objet_demande, $id_demandeur]);
+    return $stmt->fetch(PDO::FETCH_ASSOC);
+}
+
+// Demandes reçues pour un objet précis (en_attente)
+function get_demandes_recues_pour_objet($id_objet_demande, $id_proprietaire) {
+    $pdo = get_pdo();
+    $sql = "SELECT de.*, oo.nom_objet AS nom_objet_offert, od.nom_objet AS nom_objet_demande,
+                   u.username AS demandeur_nom
+            FROM demande_echange de
+            JOIN objet oo ON de.id_objet_offert = oo.id_objet
+            JOIN objet od ON de.id_objet_demande = od.id_objet
+            JOIN users u ON de.id_demandeur = u.id
+            WHERE de.id_objet_demande = ? AND de.id_proprietaire = ? AND de.statut = 'en_attente'";
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute([$id_objet_demande, $id_proprietaire]);
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
+
+function transferer_propriete($id_objet_demande, $id_objet_offert, $id_demandeur, $id_proprietaire) {
+    $pdo = get_pdo();
+    $pdo->beginTransaction();
+    try {
+        // L'objet demandé va au demandeur
+        $sql1 = "UPDATE objet SET id_user = ? WHERE id_objet = ?";
+        $stmt1 = $pdo->prepare($sql1);
+        $stmt1->execute([$id_demandeur, $id_objet_demande]);
+        
+        // L'objet offert va au propriétaire
+        $sql2 = "UPDATE objet SET id_user = ? WHERE id_objet = ?";
+        $stmt2 = $pdo->prepare($sql2);
+        $stmt2->execute([$id_proprietaire, $id_objet_offert]);
+        
+        $pdo->commit();
+        return true;
+    } catch (Exception $e) {
+        $pdo->rollBack();
+        return false;
+    }
+}

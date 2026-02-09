@@ -54,11 +54,9 @@ CREATE TABLE demande_echange (
     FOREIGN KEY (id_proprietaire) REFERENCES users(id)
 );
 
-insert into users (username, email, password) values
-('mitia', 'mitia@gmail.com', 'mitia123'),
-('tommy', 'tommy@gmail.com', 'tommy123');
+
 
 insert into objet (nom_objet, description_objet, id_categorie, id_user) values
-('Vélo', 'Un vélo de montagne en bon état', 1, 1),
-('Table', 'Une table en bois massif', 2, 2),
-('Chaise', 'Une chaise confortable pour le bureau', 2, 3);
+('Vélo', 'Un vélo de montagne en bon état', 5, 1),
+('Table', 'Une table en bois massif', 4, 2),
+('Chaise', 'Une chaise confortable pour le bureau', 4, 3);
