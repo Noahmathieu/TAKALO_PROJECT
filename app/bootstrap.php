@@ -13,4 +13,12 @@ Flight::register('db', 'PDO', array(
 
 Flight::set('flight.views.path', __DIR__ . '/views');
 
+// Charger les catégories globalement pour la barre de recherche
+Flight::before('start', function () {
+    $pdo = Flight::db();
+    $stmt = $pdo->query("SELECT * FROM categorie");
+    $categories = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    Flight::set('categories', $categories);
+});
+
 require_once __DIR__ . '/routes.php';

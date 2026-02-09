@@ -8,8 +8,12 @@ function cls_invalid($errors, $field){ return ($errors[$field] ?? '') !== '' ? '
   <meta charset="UTF-8">
   <title>Inscription</title>
   <link rel="stylesheet" href="/css/bootstrap.min.css">
+  <link rel="stylesheet" href="/css/style_recherche.css">
 </head>
 <body class="bg-light">
+
+<?php include __DIR__ . '/../partials/search_bar.php'; ?>
+
 <div class="container mt-5">
   <div class="row justify-content-center">
     <div class="col-md-6">

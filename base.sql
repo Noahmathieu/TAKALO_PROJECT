@@ -33,5 +33,3 @@ CREATE TABLE objet_photos (
     photo_path VARCHAR(255) NOT NULL,
     FOREIGN KEY (objet_id) REFERENCES objet(id_objet)
 );
-
-
