@@ -40,7 +40,6 @@ CREATE TABLE objet_photos (
     photo_path VARCHAR(255) NOT NULL,
     FOREIGN KEY (objet_id) REFERENCES objet(id_objet)
 );
-
 insert into users (username, email, password) values
 ('mitia', 'mitia@gmail.com', 'mitia123'),
 ('tommy', 'tommy@gmail.com', 'tommy123');

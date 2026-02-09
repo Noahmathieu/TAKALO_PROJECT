@@ -1,0 +1,155 @@
+body {
+    background-color: #f0f2f5;
+}
+
+.stat-card {
+    border: none;
+    border-radius: 1rem;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.stat-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 .5rem 1.5rem rgba(0, 0, 0, .12);
+}
+
+.stat-icon {
+    width: 56px;
+    height: 56px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: .75rem;
+    font-size: 1.5rem;
+}
+
+.stat-icon-users {
+    background: linear-gradient(135deg, #667eea, #764ba2);
+}
+
+.stat-icon-exchanges {
+    background: linear-gradient(135deg, #11998e, #38ef7d);
+}
+
+.stat-icon-success {
+    background: linear-gradient(135deg, #56ab2f, #a8e063);
+}
+
+.stat-icon-failed {
+    background: linear-gradient(135deg, #eb3349, #f45c43);
+}
+
+.stat-value {
+    font-size: 2rem;
+    font-weight: 700;
+    line-height: 1.2;
+}
+
+.stat-label {
+    font-size: .85rem;
+    color: #6c757d;
+    text-transform: uppercase;
+    letter-spacing: .5px;
+}
+
+.chart-bar {
+    height: 28px;
+    border-radius: 9px;
+    overflow: hidden;
+    background-color: #e9ecef;
+}
+
+.chart-bar-fill {
+    height: 100%;
+    border-radius: 9px;
+    transition: width .6s ease;
+}
+
+.chart-bar-fill-success {
+    background: #198754;
+}
+
+.chart-bar-fill-pending {
+    background: #ffc107;
+}
+
+.chart-bar-fill-failed {
+    background: #dc3545;
+}
+
+.table-exchanges th {
+    font-weight: 600;
+}
+
+.badge-dot {
+    width: 10px;
+    height: 10px;
+    display: inline-block;
+    border-radius: 50%;
+    margin-right: .4rem;
+}
+
+.badge-dot-users {
+    background: #667eea;
+}
+
+.badge-dot-exchanges {
+    background: #11998e;
+}
+
+.badge-dot-success {
+    background: #198754;
+}
+
+.badge-dot-pending {
+    background: #ffc107;
+}
+
+.badge-dot-failed {
+    background: #dc3545;
+}
+
+.section-card {
+    border: 0;
+    border-radius: 1rem;
+}
+
+.detail-box-success {
+    background: rgba(25, 135, 84, .08);
+}
+
+.detail-box-pending {
+    background: rgba(255, 193, 7, .08);
+}
+
+.detail-box-failed {
+    background: rgba(220, 53, 69, .08);
+}
+
+.detail-value-success {
+    font-size: 1.5rem;
+    color: #198754;
+}
+
+.detail-value-pending {
+    font-size: 1.5rem;
+    color: #997404;
+}
+
+.detail-value-failed {
+    font-size: 1.5rem;
+    color: #dc3545;
+}
+
+.text-pending {
+    color: #997404;
+}
+
+.empty-state-icon {
+    font-size: 3rem;
+}
+
+.progress-thin {
+    height: 8px;
+    border-radius: 4px;
+}
