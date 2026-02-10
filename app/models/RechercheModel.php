@@ -1,5 +1,4 @@
 <?php
-namespace App\Models;
 class RechercheModel {
     	private $db;
     public function __construct($db)

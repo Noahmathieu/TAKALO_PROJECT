@@ -13,13 +13,31 @@ require_once __DIR__ . '/repositories/ObjetRepository.php';
 // ROUTES D'AUTHENTIFICATION
 // ========================================
 
+// Accueil : redirige vers mes-objets si connecté, sinon vers login
+Flight::route('GET /', function(){
+    if (session_status() === PHP_SESSION_NONE) session_start();
+    if (!empty($_SESSION['user_id'])) {
+        Flight::redirect('/mes-objets');
+    } else {
+        Flight::redirect('/login');
+    }
+});
+
 // Inscription
-Flight::route('GET /register', ['AuthController', 'showRegister']);
+Flight::route('GET /register', function(){
+    if (session_status() === PHP_SESSION_NONE) session_start();
+    if (!empty($_SESSION['user_id'])) { Flight::redirect('/mes-objets'); return; }
+    AuthController::showRegister();
+});
 Flight::route('POST /register', ['AuthController', 'postRegister']);
 Flight::route('POST /api/validate/register', ['AuthController', 'validateRegisterAjax']);
 
 // Connexion
-Flight::route('GET /login', ['AuthController', 'showLogin']);
+Flight::route('GET /login', function(){
+    if (session_status() === PHP_SESSION_NONE) session_start();
+    if (!empty($_SESSION['user_id'])) { Flight::redirect('/mes-objets'); return; }
+    AuthController::showLogin();
+});
 Flight::route('POST /login', ['AuthController', 'postLogin']);
 Flight::route('POST /api/validate/login', ['AuthController', 'validateLoginAjax']);
 

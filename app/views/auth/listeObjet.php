@@ -1,34 +1,11 @@
 <?php
-function e($v){ return htmlspecialchars($v ?? '', ENT_QUOTES, 'UTF-8'); }
+if (!function_exists('e')) { function e($v){ return htmlspecialchars($v ?? '', ENT_QUOTES, 'UTF-8'); } }
 $objets = $objets ?? [];
 $mesObjets = $mesObjets ?? [];
 $demandesEnvoyees = $demandesEnvoyees ?? [];
+$pageTitle = 'Objets disponibles';
+include __DIR__ . '/../partials/header.php';
 ?>
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Objets disponibles</title>
-  <link rel="stylesheet" href="/css/bootstrap.min.css">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
-  <style>
-    .photo-preview { width: 60px; height: 60px; object-fit: cover; border-radius: 5px; }
-    .photo-small { width: 80px; height: 80px; object-fit: cover; border-radius: 5px; margin: 2px; }
-  </style>
-</head>
-
-<body class="bg-light">
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-  <div class="container">
-    <a class="navbar-brand" href="/">Takalo</a>
-    <div class="navbar-nav ms-auto">
-      <a class="nav-link" href="/mes-objets"><i class="bi bi-box-seam"></i> Mes Objets</a>
-      <span class="navbar-text me-3 ms-3">Bienvenue <?= e($_SESSION['user_username'] ?? 'Utilisateur') ?></span>
-      <a class="btn btn-outline-light btn-sm" href="/logout">Déconnexion</a>
-    </div>
-  </div>
-</nav>
 
 <div class="container mt-4">
   <div class="d-flex justify-content-between align-items-center mb-4">
@@ -147,23 +124,7 @@ $demandesEnvoyees = $demandesEnvoyees ?? [];
   </div>
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-<script>
-// Boutons Échanger
-document.querySelectorAll('.btn-echange').forEach(btn => {
-  btn.addEventListener('click', function() {
-    const idObjet = this.dataset.id;
-    const nomObjet = this.dataset.nom;
-    const proprietaire = this.dataset.proprietaire;
-    
-    document.getElementById('echange_nom_objet').textContent = nomObjet;
-    document.getElementById('echange_proprietaire').textContent = proprietaire;
-    document.getElementById('echangeForm').action = '/objets/echanger/' + idObjet;
-    document.getElementById('id_objet_offert').value = '';
-    
-    new bootstrap.Modal(document.getElementById('echanteModal')).show();
-  });
-});
-</script>
-</body>
-</html>
+<?php
+$extraJs = ['/js/echange.js'];
+include __DIR__ . '/../partials/footer.php';
+?>

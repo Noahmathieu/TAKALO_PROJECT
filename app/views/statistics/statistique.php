@@ -8,20 +8,11 @@ $failed  = (int)($totalEchangeFailed ?? 0);
 $pctSuccess = $total > 0 ? round($success / $total * 100) : 0;
 $pctPending = $total > 0 ? round($pending / $total * 100) : 0;
 $pctFailed  = $total > 0 ? round($failed  / $total * 100) : 0;
-?>
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Statistiques</title>
-  <link rel="stylesheet" href="/css/bootstrap.min.css">
-  <link rel="stylesheet" href="/css/style_statistics.css">
-  <link rel="stylesheet" href="/css/style_recherche.css">
-</head>
-<body>
 
-<?php include __DIR__ . '/../partials/search_bar.php'; ?>
+$pageTitle = 'Statistiques';
+$extraCss  = ['/css/style_statistics.css'];
+include __DIR__ . '/../partials/header.php';
+?>
 
 <div class="container py-4">
 
@@ -209,7 +200,4 @@ $pctFailed  = $total > 0 ? round($failed  / $total * 100) : 0;
 
   </div>
 
-</div>
-
-</body>
-</html>
+<?php include __DIR__ . '/../partials/footer.php'; ?>

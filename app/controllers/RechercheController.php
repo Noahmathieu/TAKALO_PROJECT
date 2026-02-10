@@ -1,4 +1,6 @@
 <?php
+require_once __DIR__ . '/../models/RechercheModel.php';
+
 class RechercheController {
 
   public static function showRecherche() {
@@ -9,7 +11,7 @@ class RechercheController {
     $categorie = trim($request->query->categorie ?? $request->data->categorie ?? '');
 
     $pdo = Flight::db();
-    $rechercheModel = new \App\Models\RechercheModel($pdo);
+    $rechercheModel = new RechercheModel($pdo);
 
     $results = [];
     if ($q !== '') {

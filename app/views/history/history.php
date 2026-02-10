@@ -1,16 +1,10 @@
 <?php
 function e_hist($v){ return htmlspecialchars($v ?? '', ENT_QUOTES, 'UTF-8'); }
 $history = $history ?? [];
+$pageTitle = 'Historique';
+include __DIR__ . '/../partials/header.php';
 ?>
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Historique</title>
-    <link rel="stylesheet" href="/css/bootstrap.min.css">
-</head>
-<body class="bg-light">
+
     <div class="container py-4">
         <h1 class="mb-4">Historique des propriétaires</h1>
 
@@ -39,5 +33,4 @@ $history = $history ?? [];
             </div>
         <?php endif; ?>
     </div>
-</body>
-</html>
+<?php include __DIR__ . '/../partials/footer.php'; ?>

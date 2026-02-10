@@ -1,8 +1,10 @@
 <?php
+require_once __DIR__ . '/../models/StatisticsModel.php';
+
 class StatistiqueController {
 
   public static function showStatistique() {
-    $statisticsModel = new \App\Models\StatisticsModel(Flight::db());
+    $statisticsModel = new StatisticsModel(Flight::db());
     $totalUsers = $statisticsModel->getTotalUsers();
     $totalEchanges = $statisticsModel->getTotalEchanges();
     $totalEchangeSuccess = $statisticsModel->getTotalEchangeSuccess();

@@ -1,19 +1,9 @@
 <?php
 $results = $results ?? [];
 $q = $q ?? '';
+$pageTitle = 'Recherche' . ($q ? ' — ' . htmlspecialchars($q, ENT_QUOTES, 'UTF-8') : '');
+include __DIR__ . '/partials/header.php';
 ?>
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Recherche<?= $q ? ' — ' . htmlspecialchars($q, ENT_QUOTES, 'UTF-8') : '' ?></title>
-  <link rel="stylesheet" href="/css/bootstrap.min.css">
-  <link rel="stylesheet" href="/css/style_recherche.css">
-</head>
-<body>
-
-<?php include __DIR__ . '/partials/search_bar.php'; ?>
 
 <div class="container py-4">
 
@@ -56,5 +46,4 @@ $q = $q ?? '';
 
 </div>
 
-</body>
-</html>
+<?php include __DIR__ . '/partials/footer.php'; ?>

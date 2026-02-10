@@ -1,5 +1,4 @@
 <?php
-namespace App\Models;
 class StatisticsModel {
     	private $db;
 	public function __construct($db)

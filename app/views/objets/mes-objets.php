@@ -1,33 +1,11 @@
 <?php
-function e($v){ return htmlspecialchars($v ?? '', ENT_QUOTES, 'UTF-8'); }
+if (!function_exists('e')) { function e($v){ return htmlspecialchars($v ?? '', ENT_QUOTES, 'UTF-8'); } }
 $objets = $objets ?? [];
 $categories = $categories ?? [];
 $demandesRecues = $demandesRecues ?? [];
+$pageTitle = 'Mes Objets';
+include __DIR__ . '/../partials/header.php';
 ?>
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-  <meta charset="UTF-8">
-  <title>Mes Objets</title>
-  <link rel="stylesheet" href="/css/bootstrap.min.css">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
-  <style>
-    .photo-preview { width: 60px; height: 60px; object-fit: cover; border-radius: 5px; }
-    .photo-small { width: 80px; height: 80px; object-fit: cover; border-radius: 5px; margin: 2px; }
-    .delete-photo-btn { position: absolute; top: -5px; right: -5px; }
-    .photo-container { position: relative; display: inline-block; }
-  </style>
-</head>
-<body class="bg-light">
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-  <div class="container">
-    <a class="navbar-brand" href="/">Takalo</a>
-    <div class="navbar-nav ms-auto">
-      <span class="navbar-text me-3">Bienvenue <?= e($_SESSION['user_username'] ?? 'Utilisateur') ?></span>
-      <a class="btn btn-outline-light btn-sm" href="/logout">Déconnexion</a>
-    </div>
-  </div>
-</nav>
 
 <div class="container mt-4">
   <div class="d-flex justify-content-between align-items-center mb-4">
@@ -97,6 +75,9 @@ $demandesRecues = $demandesRecues ?? [];
                           data-nom="<?= e($objet['nom_objet']) ?>">
                     <i class="bi bi-trash"></i>
                   </button>
+                  <a href="/history/<?= $objet['id_objet'] ?>" class="btn btn-sm btn-outline-secondary" title="Historique">
+                    <i class="bi bi-clock-history"></i>
+                  </a>
                 </td>
               </tr>
             <?php endforeach; ?>
@@ -234,73 +215,7 @@ $demandesRecues = $demandesRecues ?? [];
 <?= json_encode($demandesRecues, JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT) ?>
 </script>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-<script>
-// Boutons Modifier
-document.querySelectorAll('.btn-edit').forEach(btn => {
-  btn.addEventListener('click', function() {
-    document.getElementById('edit_id_objet').value = this.dataset.id;
-    document.getElementById('edit_nom_objet').value = this.dataset.nom;
-    document.getElementById('edit_description_objet').value = this.dataset.description;
-    document.getElementById('edit_id_categorie').value = this.dataset.categorie;
-    new bootstrap.Modal(document.getElementById('editObjetModal')).show();
-  });
-});
-
-// Boutons Supprimer
-document.querySelectorAll('.btn-delete').forEach(btn => {
-  btn.addEventListener('click', function() {
-    document.getElementById('delete_id_objet').value = this.dataset.id;
-    document.getElementById('delete_nom_objet').textContent = this.dataset.nom;
-    new bootstrap.Modal(document.getElementById('deleteObjetModal')).show();
-  });
-});
-
-// Boutons Voir détail demandes
-const demandesData = JSON.parse(document.getElementById('demandes-data').textContent);
-document.querySelectorAll('.btn-detail-demande').forEach(btn => {
-  btn.addEventListener('click', function() {
-    const idObjet = this.dataset.id;
-    const nomObjet = this.dataset.nom;
-    
-    document.getElementById('detail_nom_objet').textContent = nomObjet;
-    
-    const demandes = demandesData[idObjet] || [];
-    let html = '';
-    
-    if (demandes.length === 0) {
-      html = '<p class="text-muted text-center">Aucune demande.</p>';
-    } else {
-      demandes.forEach(d => {
-        html += `
-          <div class="card mb-3 border-start border-4 border-warning">
-            <div class="card-body">
-              <div class="d-flex justify-content-between align-items-start">
-                <div>
-                  <h6 class="card-title"><i class="bi bi-person"></i> ${d.demandeur_nom} veut échanger</h6>
-                  <p class="mb-1">Propose : <strong>${d.nom_objet_offert}</strong></p>
-                  <p class="mb-1">Contre votre : <strong>${d.nom_objet_demande}</strong></p>
-                  <small class="text-muted">${new Date(d.created_at).toLocaleDateString('fr-FR')}</small>
-                </div>
-                <div class="d-flex gap-2">
-                  <form method="post" action="/demande/accepter/${d.id_demande}" onsubmit="return confirm('Accepter cet échange ? Les propriétaires des deux objets seront échangés.')">
-                    <button type="submit" class="btn btn-sm btn-success"><i class="bi bi-check-lg"></i> Accepter</button>
-                  </form>
-                  <form method="post" action="/demande/refuser/${d.id_demande}">
-                    <button type="submit" class="btn btn-sm btn-danger"><i class="bi bi-x-lg"></i> Refuser</button>
-                  </form>
-                </div>
-              </div>
-            </div>
-          </div>
-        `;
-      });
-    }
-    
-    document.getElementById('detail_demandes_body').innerHTML = html;
-    new bootstrap.Modal(document.getElementById('detailDemandeModal')).show();
-  });
-});
-</script>
-</body>
-</html>
+<?php
+$extraJs = ['/js/mes-objets.js'];
+include __DIR__ . '/../partials/footer.php';
+?>

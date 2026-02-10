@@ -1,0 +1,171 @@
+/* ============================================
+   STYLE ÉCHANGE — Takalo
+   ============================================ */
+
+
+/* Photos */
+
+.photo-preview {
+    width: 60px;
+    height: 60px;
+    object-fit: cover;
+    border-radius: 6px;
+}
+
+.photo-small {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    border-radius: 6px;
+    margin: 2px;
+}
+
+.photo-placeholder {
+    width: 60px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 6px;
+    background: #dee2e6;
+    color: #6c757d;
+    font-size: 1.2rem;
+}
+
+
+/* Table objets */
+
+.table-objets th {
+    font-weight: 600;
+    font-size: .85rem;
+    text-transform: uppercase;
+    letter-spacing: .3px;
+}
+
+.table-objets td {
+    vertical-align: middle;
+}
+
+
+/* Boutons échange */
+
+.btn-echange {
+    transition: all .2s ease;
+}
+
+.btn-echange:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 2px 6px rgba(25, 135, 84, .3);
+}
+
+
+/* Badge statut */
+
+.badge-statut-en_attente {
+    background-color: #fff3cd;
+    color: #856404;
+}
+
+.badge-statut-accepte {
+    background-color: #d1e7dd;
+    color: #0f5132;
+}
+
+.badge-statut-refuse {
+    background-color: #f8d7da;
+    color: #842029;
+}
+
+
+/* Modal échange */
+
+.modal-echange .modal-header {
+    background: linear-gradient(135deg, #198754, #20c997);
+    color: #fff;
+    border-bottom: none;
+}
+
+.modal-echange .modal-title i {
+    margin-right: .4rem;
+}
+
+.modal-echange .btn-close-white {
+    filter: brightness(0) invert(1);
+}
+
+.modal-echange .modal-body .objet-info {
+    padding: .75rem 1rem;
+    background: #f8f9fa;
+    border-radius: .5rem;
+    margin-bottom: 1rem;
+}
+
+.modal-echange .modal-body .objet-info strong {
+    color: #198754;
+}
+
+
+/* Card objet dans la liste */
+
+.card-objet {
+    border: none;
+    border-radius: .75rem;
+    transition: transform .2s ease, box-shadow .2s ease;
+}
+
+.card-objet:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 .5rem 1.2rem rgba(0, 0, 0, .1);
+}
+
+
+/* État vide */
+
+.empty-state {
+    padding: 3rem 1rem;
+    text-align: center;
+    color: #6c757d;
+}
+
+.empty-state i {
+    font-size: 3rem;
+    display: block;
+    margin-bottom: .75rem;
+}
+
+
+/* Navbar Takalo */
+
+.navbar-takalo {
+    background: linear-gradient(135deg, #343a40 0%, #212529 100%);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, .15);
+}
+
+
+/* Actions groupées */
+
+.actions-cell {
+    white-space: nowrap;
+}
+
+.actions-cell .btn {
+    margin-bottom: 2px;
+}
+
+
+/* Responsive table */
+
+@media (max-width: 768px) {
+    .table-objets {
+        font-size: .85rem;
+    }
+    .photo-preview {
+        width: 45px;
+        height: 45px;
+    }
+    .actions-cell .btn {
+        display: block;
+        width: 100%;
+        margin-bottom: 4px;
+    }
+}
