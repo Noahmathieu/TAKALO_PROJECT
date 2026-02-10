@@ -271,3 +271,57 @@ Flight::route('POST /objets/echanger/@id', function($id){
     
     Flight::redirect('/objets');
 });
+
+// ========================================
+// ACCEPTER / REFUSER UNE DEMANDE D'ÉCHANGE
+// ========================================
+
+Flight::route('POST /demande/accepter/@id', function($id){
+    if (session_status() === PHP_SESSION_NONE) session_start();
+    if (empty($_SESSION['user_id'])) {
+        Flight::redirect('/login');
+        return;
+    }
+    
+    $id_demande = intval($id);
+    $demande = ObjetController::get_demande($id_demande);
+    
+    // Vérifier que la demande existe et que l'utilisateur est bien le propriétaire
+    if (!$demande || $demande['id_proprietaire'] != $_SESSION['user_id']) {
+        Flight::redirect('/mes-objets');
+        return;
+    }
+    
+    // Vérifier que la demande est en attente
+    if ($demande['statut'] !== 'en_attente') {
+        Flight::redirect('/mes-objets');
+        return;
+    }
+    
+    // Accepter : transférer les propriétés et mettre à jour les statuts
+    ObjetController::accepter_demande($id_demande);
+    
+    Flight::redirect('/mes-objets');
+});
+
+Flight::route('POST /demande/refuser/@id', function($id){
+    if (session_status() === PHP_SESSION_NONE) session_start();
+    if (empty($_SESSION['user_id'])) {
+        Flight::redirect('/login');
+        return;
+    }
+    
+    $id_demande = intval($id);
+    $demande = ObjetController::get_demande($id_demande);
+    
+    // Vérifier que la demande existe et que l'utilisateur est bien le propriétaire
+    if (!$demande || $demande['id_proprietaire'] != $_SESSION['user_id']) {
+        Flight::redirect('/mes-objets');
+        return;
+    }
+    
+    // Refuser la demande
+    ObjetController::refuser_demande($id_demande);
+    
+    Flight::redirect('/mes-objets');
+});
