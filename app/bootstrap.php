@@ -1,6 +1,10 @@
 <?php
 require_once __DIR__ . '/config.php';
 
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+
 Flight::register('db', 'PDO', array(
     "mysql:host=" . DB_HOST . ";dbname=" . DB_NAME . ";charset=" . DB_CHARSET,
     DB_USER,

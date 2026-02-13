@@ -54,6 +54,14 @@ $_currentUri = $_SERVER['REQUEST_URI'] ?? '';
             <i class="bi bi-bar-chart"></i> Statistiques
           </a>
         </li>
+
+        <?php if (($_SESSION['user_username'] ?? '') === 'admin'): ?>
+        <li class="nav-item">
+          <a class="nav-link <?= str_starts_with($_currentUri, '/admin/categorie') ? 'active' : '' ?>" href="/admin/categorie">
+            <i class="bi bi-list-task"></i> Gérer Catégories
+          </a>
+        </li>
+        <?php endif; ?>
         <li class="nav-item">
           <a class="nav-link <?= str_starts_with($_currentUri, '/recherche') ? 'active' : '' ?>" href="/recherche">
             <i class="bi bi-search"></i> Recherche

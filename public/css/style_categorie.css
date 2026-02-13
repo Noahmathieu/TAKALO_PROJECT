@@ -1,0 +1,288 @@
+/* ============================================
+   STYLE CATÉGORIE — Takalo Admin
+   ============================================ */
+
+/* Page header */
+.categorie-header {
+    background: linear-gradient(135deg, #343a40 0%, #212529 100%);
+    color: #fff;
+    padding: 2rem 0;
+    margin-bottom: 2rem;
+    border-radius: 0 0 1rem 1rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, .15);
+}
+
+.categorie-header h1 {
+    font-weight: 700;
+    font-size: 1.8rem;
+    margin: 0;
+}
+
+.categorie-header p {
+    margin: .25rem 0 0;
+    opacity: .75;
+    font-size: .95rem;
+}
+
+/* Card add form */
+.card-add-categorie {
+    border: none;
+    border-radius: .75rem;
+    box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .07);
+    overflow: hidden;
+    transition: box-shadow .2s ease;
+}
+
+.card-add-categorie:hover {
+    box-shadow: 0 .5rem 1.2rem rgba(0, 0, 0, .12);
+}
+
+.card-add-categorie .card-header {
+    background: linear-gradient(135deg, #198754, #20c997);
+    color: #fff;
+    font-weight: 600;
+    font-size: 1rem;
+    padding: .85rem 1.25rem;
+    border-bottom: none;
+}
+
+.card-add-categorie .card-header i {
+    margin-right: .4rem;
+}
+
+.card-add-categorie .card-body {
+    padding: 1.5rem;
+}
+
+.card-add-categorie .form-label {
+    font-weight: 600;
+    font-size: .875rem;
+    color: #495057;
+}
+
+.card-add-categorie textarea {
+    resize: vertical;
+    min-height: 80px;
+}
+
+/* Table card */
+.card-table-categorie {
+    border: none;
+    border-radius: .75rem;
+    box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .07);
+    overflow: hidden;
+}
+
+.card-table-categorie .card-header {
+    background: #f8f9fa;
+    font-weight: 600;
+    font-size: 1rem;
+    padding: .85rem 1.25rem;
+    border-bottom: 1px solid #dee2e6;
+    color: #343a40;
+}
+
+.card-table-categorie .card-header i {
+    margin-right: .4rem;
+}
+
+/* Table styles */
+.table-categories {
+    margin: 0;
+}
+
+.table-categories thead th {
+    font-weight: 600;
+    font-size: .8rem;
+    text-transform: uppercase;
+    letter-spacing: .5px;
+    color: #6c757d;
+    border-bottom: 2px solid #dee2e6;
+    padding: .85rem 1rem;
+    background: #fafbfc;
+}
+
+.table-categories tbody td {
+    vertical-align: middle;
+    padding: .85rem 1rem;
+    font-size: .9rem;
+}
+
+.table-categories tbody tr {
+    transition: background-color .15s ease;
+}
+
+.table-categories tbody tr:hover {
+    background-color: #f1f8f4;
+}
+
+/* Badge ID */
+.badge-id {
+    background-color: #e9ecef;
+    color: #495057;
+    font-weight: 600;
+    font-size: .8rem;
+    padding: .35em .65em;
+    border-radius: .5rem;
+}
+
+/* Inline edit inputs */
+.table-categories .form-control-sm {
+    border-radius: .4rem;
+    border: 1px solid #dee2e6;
+    transition: border-color .2s, box-shadow .2s;
+    font-size: .875rem;
+}
+
+.table-categories .form-control-sm:focus {
+    border-color: #198754;
+    box-shadow: 0 0 0 .2rem rgba(25, 135, 84, .15);
+}
+
+/* Action buttons */
+.btn-action-edit {
+    background: linear-gradient(135deg, #0d6efd, #0b5ed7);
+    color: #fff;
+    border: none;
+    border-radius: .4rem;
+    font-size: .8rem;
+    padding: .35rem .75rem;
+    transition: all .2s ease;
+}
+
+.btn-action-edit:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 3px 8px rgba(13, 110, 253, .3);
+    color: #fff;
+}
+
+.btn-action-delete {
+    background: linear-gradient(135deg, #dc3545, #c82333);
+    color: #fff;
+    border: none;
+    border-radius: .4rem;
+    font-size: .8rem;
+    padding: .35rem .75rem;
+    transition: all .2s ease;
+    text-decoration: none;
+    display: inline-block;
+}
+
+.btn-action-delete:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 3px 8px rgba(220, 53, 69, .3);
+    color: #fff;
+}
+
+.btn-add-categorie {
+    background: linear-gradient(135deg, #198754, #20c997);
+    border: none;
+    color: #fff;
+    font-weight: 600;
+    padding: .5rem 1.5rem;
+    border-radius: .5rem;
+    transition: all .2s ease;
+}
+
+.btn-add-categorie:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 10px rgba(25, 135, 84, .3);
+    color: #fff;
+}
+
+/* Actions cell */
+.actions-cell-cat {
+    white-space: nowrap;
+}
+
+.actions-cell-cat .btn,
+.actions-cell-cat a {
+    margin-right: 4px;
+}
+
+/* Empty state */
+.empty-categories {
+    text-align: center;
+    padding: 3rem 1rem;
+    color: #adb5bd;
+}
+
+.empty-categories i {
+    font-size: 3rem;
+    display: block;
+    margin-bottom: .75rem;
+}
+
+.empty-categories p {
+    font-size: 1rem;
+    margin: 0;
+}
+
+/* Stats badge row */
+.stat-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: .4rem;
+    background: #fff;
+    border-radius: .5rem;
+    padding: .4rem .85rem;
+    font-size: .85rem;
+    font-weight: 600;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, .08);
+}
+
+.stat-badge i {
+    font-size: 1rem;
+}
+
+.stat-badge.text-success { color: #198754 !important; }
+
+/* Responsive */
+@media (max-width: 768px) {
+    .categorie-header {
+        padding: 1.25rem 0;
+        border-radius: 0;
+    }
+
+    .categorie-header h1 {
+        font-size: 1.4rem;
+    }
+
+    .table-categories thead {
+        display: none;
+    }
+
+    .table-categories tbody tr {
+        display: block;
+        margin-bottom: 1rem;
+        border: 1px solid #dee2e6;
+        border-radius: .5rem;
+        overflow: hidden;
+    }
+
+    .table-categories tbody td {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: .6rem 1rem;
+        border-bottom: 1px solid #f1f3f5;
+    }
+
+    .table-categories tbody td::before {
+        content: attr(data-label);
+        font-weight: 600;
+        font-size: .8rem;
+        color: #6c757d;
+        text-transform: uppercase;
+        margin-right: .5rem;
+        flex-shrink: 0;
+    }
+
+    .actions-cell-cat {
+        justify-content: flex-end !important;
+    }
+
+    .card-add-categorie .card-body {
+        padding: 1rem;
+    }
+}

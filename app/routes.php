@@ -4,11 +4,11 @@ require_once __DIR__ . '/controllers/ObjetController.php';
 require_once __DIR__ . '/controllers/StatistiqueController.php';
 require_once __DIR__ . '/controllers/RechercheController.php';
 require_once __DIR__ . '/controllers/HistoryController.php';
+require_once __DIR__ . '/controllers/CategorieController.php';
 require_once __DIR__ . '/services/Validator.php';
 require_once __DIR__ . '/services/UserService.php';
 require_once __DIR__ . '/repositories/UserRepository.php';
 require_once __DIR__ . '/repositories/ObjetRepository.php';
-
 // ========================================
 // ROUTES D'AUTHENTIFICATION
 // ========================================
@@ -325,3 +325,17 @@ Flight::route('POST /demande/refuser/@id', function($id){
     
     Flight::redirect('/mes-objets');
 });
+
+Flight::route('GET /admin/categorie', function () {
+    CategorieController::showCategorie();
+});
+Flight::route('POST /admin/categorie/edit/@id', function ($id) {
+    CategorieController::edit($id);
+});
+Flight::route('GET /admin/categorie/delete/@id', function ($id) {
+    CategorieController::delete($id);
+});
+Flight::route('POST /admin/categorie/add', function () {
+    CategorieController::add();
+});
+

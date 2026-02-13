@@ -10,7 +10,7 @@ class StatisticsModel {
         $stmt = $this->db->query("SELECT COUNT(*) as total FROM users");
         $result = $stmt->fetch(\PDO::FETCH_ASSOC);
         return $result['total'];
-    }   
+    }
     public function getTotalEchanges()
     {
         $stmt = $this->db->query("SELECT COUNT(*) as total FROM demande_echange");
