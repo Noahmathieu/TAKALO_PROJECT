@@ -5,7 +5,7 @@ class HistoryController {
 
   public static function showHistory($id_objet) {
     $pdo = Flight::db();
-    $historyModel = new \app\models\HistoryModel($pdo);
+    $historyModel = new HistoryModel($pdo);
     $history = $historyModel->history($id_objet);
     Flight::render('history/history', ['history' => $history]);
   }
