@@ -15,8 +15,8 @@ include __DIR__ . '/../partials/header.php';
                 <table class="table table-striped table-bordered align-middle">
                     <thead class="table-light">
                         <tr>
-                            <th>Propriétaire 1</th>
-                            <th>Propriétaire 2</th>
+                            <th>Ancien Propriétaire 1</th>
+                            <th>Propriétaire Actuel</th>
                             <th>Date</th>
                         </tr>
                     </thead>
